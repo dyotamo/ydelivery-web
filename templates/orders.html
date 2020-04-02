@@ -15,11 +15,11 @@
         <tbody>
             {% for order in orders %}
             <tr>
-                <td>{{order.ref}}"</td>
-                <td>{{order.contact}}</td>
-                <td>[{{order.latitude}}, {{order.longitude}}]</td>
-                <td>{{order.amount}}</td>
-                <td>{{order.status}}</td>
+                <td><a href="{{ url_for('order', ref=order.ref) }}">{{ order.ref }}</td>
+                <td>{{ order.contact }}</td>
+                <td>[{{ order.latitude }}, {{ order.longitude }}]</td>
+                <td>{{ order.amount }}</td>
+                <td>{{ order.status }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -3,17 +3,15 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-items = db.Table(
-    'items',
-    db.Column('product_id',
-              db.Integer,
-              db.ForeignKey('product.id'),
-              primary_key=True),
-    db.Column('order_ref',
-              db.Integer,
-              db.ForeignKey('order.ref'),
-              primary_key=True),
-    db.Column('quantity', db.Integer(), unique=False, nullable=False))
+
+class Product_Order(db.Model):
+    product_id = db.Column(db.Integer,
+                           db.ForeignKey('product.id'),
+                           primary_key=True)
+    order_id = db.Column(db.String,
+                         db.ForeignKey('order.ref'),
+                         primary_key=True)
+    quantity = db.Column(db.Integer)
 
 
 # Models
@@ -29,19 +27,14 @@ class Product(db.Model):
 
 
 class Order(db.Model):
-    ref = db.Column(db.String(25), primary_key=True)
+    ref = db.Column(db.String(80), primary_key=True)
     contact = db.Column(db.String(25), unique=False, nullable=False)
     latitude = db.Column(db.Float, unique=False, nullable=False)
     longitude = db.Column(db.Float, unique=False, nullable=False)
-    amount = db.Column(db.Float, unique=False, nullable=False)
     status = db.Column(db.String(10),
-                       unique=True,
+                       unique=False,
                        nullable=False,
                        default='pending')
-    items = db.relationship('Product',
-                            secondary=items,
-                            lazy='subquery',
-                            backref=db.backref('items', lazy=True))
 
     def __repr__(self):
         return '<Order %s>' % self.ref
@@ -54,7 +47,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), unique=False, nullable=False)
 
     def __repr__(self):
-        return "<User %s>" % self.institution
+        return "<User %s>" % self.username
 
 
 if __name__ == "__main__":

@@ -26,10 +26,10 @@
         <tbody>
             {% for product in products %}
             <tr>
-                <td><img src="{{product.image}}" /></td>
-                <td>{{product.name}}</td>
-                <td>{{product.unit_price}}</td>
-                <td>{{product.quantity}}</td>
+                <td><img src="{{ product.image }}" /></td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.unit_price }}</td>
+                <td>{{ product.quantity }}</td>
             </tr>
             {% endfor %}
         </tbody>
