@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/home/djotamo/.local/share/virtualenvs/shop-e4jTwNAG/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "yapf"
+}

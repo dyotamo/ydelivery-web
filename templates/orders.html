@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<div>
+    <table class="table table-borderless">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Referência</th>
+                <th scope="col">Contacto</th>
+                <th scope="col">Localização</th>
+                <th scope="col">Total</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.ref}}"</td>
+                <td>{{order.contact}}</td>
+                <td>[{{order.latitude}}, {{order.longitude}}]</td>
+                <td>{{order.amount}}</td>
+                <td>{{order.status}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
