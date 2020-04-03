@@ -16,7 +16,7 @@ flask-wtf = "*"
 flask-login = "*"
 flask-restless = "*"
 gunicorn = "*"
-psycopg2 = "*
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
