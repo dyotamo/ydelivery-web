@@ -55,7 +55,12 @@ def order(ref):
         db.session.add(order)
 
         if (status == 'Aceite'):
-            # Fazer a manipulação da quantidade dos produtos
+            # Fazer a diminui da quantidade dos produtos em stock
+            for item in order.products:
+                product = Product.query.get(item.product.id)
+                product.quantity -= item.quantity
+
+                db.session.add(product)
             flash("Pedido aceite.", "success")
         else:
             flash("Pedido rejeitado.", "danger")
