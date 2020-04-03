@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 flake8 = "*"
 yapf = "*"
-faker = "*"
 rope = "*"
 
 [packages]
@@ -17,6 +16,7 @@ flask-login = "*"
 flask-restless = "*"
 gunicorn = "*"
 psycopg2 = "*"
+faker = "*"
 
 [requires]
 python_version = "3.7"
