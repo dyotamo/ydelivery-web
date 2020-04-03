@@ -1,11 +1,14 @@
-from flask import render_template, jsonify, flash, redirect, url_for
+from flask import render_template, jsonify, flash, redirect, url_for, abort
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import sqlalchemy
 
 from app import app, login_manager
 from models import db, Product, Order, User
 from forms.upload import UploadForm
+from forms.response import ResponseForm
 from forms.user import LoginForm, PasswordChangeForm
+from utils.produts import get_total
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -26,7 +29,8 @@ def index():
                 flash("Ficheiro inválido.", "warning")
 
     return render_template("products.html",
-                           products=Product.query.all(),
+                           products=Product.query.order_by(
+                               sqlalchemy.text('name')),
                            form=form)
 
 
@@ -40,14 +44,29 @@ def orders():
 @login_required
 def order(ref):
     order = Order.query.get_or_404(ref)
+    if order.status != 'Pendente':
+        raise abort(403)
 
-    form = UploadForm()
+    form = ResponseForm()
 
     if form.validate_on_submit():
-        flash("Estado da compra alterado com sucesso.", "success")
+        status = form.response.data
+        order.status = status
+        db.session.add(order)
+
+        if (status == 'Aceite'):
+            # Fazer a manipulação da quantidade dos produtos
+            flash("Pedido aceite.", "success")
+        else:
+            flash("Pedido rejeitado.", "danger")
+
+        db.session.commit()
         return redirect(url_for("orders"))
 
-    return render_template("orders.html", order=order, form=form)
+    return render_template("order.html",
+                           order=order,
+                           total=get_total(order),
+                           form=form)
 
 
 @app.route('/request', methods=['POST'])
@@ -121,6 +140,11 @@ def load_user(user_id):
 @app.errorhandler(500)
 def internal_server_error(e):
     return jsonify("500 Internal Server Error, dyotamo has been reported.")
+
+
+@app.errorhandler(403)
+def forbidden(e):
+    return jsonify("403 Forbidden.")
 
 
 @app.errorhandler(404)

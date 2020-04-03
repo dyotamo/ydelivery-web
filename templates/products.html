@@ -13,14 +13,17 @@
     </div>
 </form>
 
+<h1>Em Stock</h1>
+
 <div>
     <table class="table table-borderless">
         <thead class="thead-light">
             <tr>
                 <th scope="col"></th>
                 <th scope="col">Nome</th>
-                <th scope="col">Preço unitário</th>
-                <th scope="col">Quantidade disponível</th>
+                <th scope="col">Categoria</th>
+                <th scope="col" style="text-align: right;">Preço unitário</th>
+                <th scope="col" style="text-align: right;">Quantidade disponível</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +31,9 @@
             <tr>
                 <td><img src="{{ product.image }}" /></td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.unit_price }}</td>
-                <td>{{ product.quantity }}</td>
+                <td>{{ product.category }}</td>
+                <td style="text-align: right;">{{ "{:,.2f} Mt".format(product.unit_price) }}</td>
+                <td style="text-align: right;">{{ product.quantity }}</td>
             </tr>
             {% endfor %}
         </tbody>
