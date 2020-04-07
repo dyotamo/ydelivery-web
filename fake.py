@@ -1,4 +1,3 @@
-import uuid
 from random import choice, randint
 
 from werkzeug.security import generate_password_hash
@@ -6,6 +5,7 @@ from faker import Faker
 
 from app import app, db
 from models import Product, Order, Product_Order, User
+from utils.collections import randomString
 
 faker = Faker('pt_BR')
 
@@ -37,10 +37,10 @@ def generate_products():
 
 def generate_orders():
     for index in range(5):
-        order = Order(ref=str(uuid.uuid4()),
-                      contact='+258848209765',
-                      latitude='-25.971238',
-                      longitude='32.571232')
+        order = Order(ref=str(randomString(10),
+                              contact='+258848209765',
+                              latitude='-25.971238',
+                              longitude='32.571232'))
         db.session.add(order)
         generate_items(order)
 

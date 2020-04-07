@@ -1,5 +1,4 @@
 import json
-import uuid
 
 from flask import (
     render_template,
@@ -20,7 +19,7 @@ from forms.upload import UploadForm
 from forms.response import ResponseForm
 from forms.user import LoginForm, PasswordChangeForm
 from utils.produts import get_total
-from utils.collections import map_items
+from utils.collections import map_items, randomString
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -89,7 +88,7 @@ def order(ref):
 def request_():
     body = json.loads(str(request.json).replace("'", '"'))
 
-    order = Order(ref=str(uuid.uuid4()),
+    order = Order(ref=str(randomString(10)),
                   contact=body['contact'],
                   latitude=body['location']['latitude'],
                   longitude=body['location']['longitude'])

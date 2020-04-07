@@ -1,3 +1,7 @@
+import string
+import random
+
+
 def map_items(items):
     map = {}
     for item in items:
@@ -7,3 +11,8 @@ def map_items(items):
         else:
             map[item] += 1
     return map
+
+
+def randomString(stringLength=10):
+    letters = string.ascii_lowercase.upper()
+    return ''.join(random.choice(letters) for i in range(stringLength))
