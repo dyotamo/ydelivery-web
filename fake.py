@@ -58,5 +58,5 @@ if __name__ == '__main__':
     with app.app_context():
         generate_user()
         generate_products()
-        generate_orders()
+        # generate_orders()
         db.session.commit()
