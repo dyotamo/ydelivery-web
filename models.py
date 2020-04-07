@@ -25,7 +25,6 @@ class Product(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     category = db.Column(db.String(80), unique=False, nullable=False)
     unit_price = db.Column(db.Float, unique=False, nullable=False)
-    quantity = db.Column(db.Integer, unique=False, nullable=False)
     image = db.Column(db.String(255), unique=False, nullable=False)
     orders = db.relationship('Product_Order', back_populates='product')
 

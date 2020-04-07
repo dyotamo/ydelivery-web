@@ -31,7 +31,6 @@ def generate_products():
             Product(name=faker.name(),
                     category=choice(categories),
                     unit_price=randint(1, 1000),
-                    quantity=randint(1, 1000),
                     image=image_url.format(index)))
     db.session.commit()
 
