@@ -58,7 +58,6 @@ def order(ref):
             # Fazer a diminui da quantidade dos produtos em stock
             for item in order.products:
                 product = Product.query.get(item.product.id)
-                product.quantity -= item.quantity
 
                 db.session.add(product)
             flash("Pedido aceite.", "success")
