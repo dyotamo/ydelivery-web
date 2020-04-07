@@ -1,5 +1,5 @@
-name,unit_price,quantity,image
-Zachary Levi,1000,2,https://picsum.photos/seed/2/100/50
-Dássone J. Yotamo,250,100,https://picsum.photos/seed/6/100/50
-Melissa Jones,100,1,https://picsum.photos/seed/1/100/50
-Evan Phillips,100,2,https://picsum.photos/seed/2/100/50
+name,unit_price,image
+Zachary Levi,1000,https://picsum.photos/seed/2/100/50
+Dássone J. Yotamo,100,https://picsum.photos/seed/6/100/50
+Melissa Jones,100,https://picsum.photos/seed/1/100/50
+Evan Phillips,100,https://picsum.photos/seed/2/100/50

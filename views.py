@@ -1,14 +1,26 @@
-from flask import render_template, jsonify, flash, redirect, url_for, abort
+import json
+import uuid
+
+from flask import (
+    render_template,
+    jsonify,
+    flash,
+    redirect,
+    url_for,
+    abort,
+    request,
+)
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import sqlalchemy
 
 from app import app, login_manager
-from models import db, Product, Order, User
+from models import db, Product, Order, Product_Order, User
 from forms.upload import UploadForm
 from forms.response import ResponseForm
 from forms.user import LoginForm, PasswordChangeForm
 from utils.produts import get_total
+from utils.collections import map_items
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -74,8 +86,25 @@ def order(ref):
 
 
 @app.route('/request', methods=['POST'])
-def request_(ref):
-    pass
+def request_():
+    body = json.loads(str(request.json).replace("'", '"'))
+
+    order = Order(ref=str(uuid.uuid4()),
+                  contact=body['contact'],
+                  latitude=body['location']['latitude'],
+                  longitude=body['location']['longitude'])
+
+    with db.session.no_autoflush:
+        for product_id, quantity in map_items(body['cart']).items():
+            item = Product_Order(product_id=product_id,
+                                 order_ref=order.ref,
+                                 quantity=quantity)
+            order.products.append(item)
+
+    db.session.add(order)
+    db.session.commit()
+
+    return jsonify(dict(reference=order.ref))
 
 
 @app.route("/login", methods=["GET", "POST"])
