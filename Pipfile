@@ -17,6 +17,8 @@ flask-restless = "*"
 gunicorn = "*"
 psycopg2 = "*"
 faker = "*"
+telerivet = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

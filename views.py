@@ -20,6 +20,7 @@ from forms.response import ResponseForm
 from forms.user import LoginForm, PasswordChangeForm
 from utils.produts import get_total
 from utils.collections import map_items, randomString
+from utils.telerivet import send_sms
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -72,8 +73,21 @@ def order(ref):
 
                 db.session.add(product)
             flash("Pedido aceite.", "success")
+            send_sms(
+                order.contact,
+                'O seu pedido foi aceite, valor de {:,.2f} Mt. Em breve '
+                'faremos a entrega dos seus produtos na localização '
+                'informada.\n\n'
+                'Referência: {}.\n\n'
+                'NB: O pagamento é feito no momento da entrega.'.format(
+                    get_total(order), order.ref))
         else:
             flash("Pedido rejeitado.", "danger")
+            send_sms(
+                order.contact,
+                'Infelizmente por razões alheias na nossa vontade '
+                'não podemos satisfazer o seu pedido.\n\n'
+                'Referência: {}.'.format(order.ref))
 
         db.session.commit()
         return redirect(url_for("orders"))
