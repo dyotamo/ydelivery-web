@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lumen/bootstrap.min.css"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css"
         crossorigin="anonymous">
 
-    <title>shop</title>
+    <title>Shopper</title>
 </head>
 
-<body>
+<body class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 20px;">
-        <a class="navbar-brand" href="{{ url_for('index') }}">shop</a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">Shopper</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <div class="flashes" style="margin-top: 10px;">
