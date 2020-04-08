@@ -17,7 +17,6 @@ flask-restless = "*"
 gunicorn = "*"
 psycopg2 = "*"
 faker = "*"
-telerivet = "*"
 requests = "*"
 
 [requires]
