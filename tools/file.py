@@ -1,7 +1,9 @@
 from os.path import join
 from csv import DictReader
 from tempfile import gettempdir
+
 from werkzeug.utils import secure_filename
+
 from models import db, Product
 
 
@@ -25,8 +27,10 @@ def import_csv(f):
                 db.session.add(Product(**row))
             else:
                 product.name = row['name']
+                product.category = row['category']
                 product.unit_price = row['unit_price']
-                product.quantity = row['quantity']
                 product.image = row['image']
                 db.session.merge(product)
+
+            print(product)
         db.session.commit()
