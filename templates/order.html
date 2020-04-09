@@ -22,7 +22,7 @@
                 {% for item in order.products %}
                 <tr>
                     <td>
-                        {% if product.image and product.image != ''   %}
+                        {% if item.product.image and item.product.image != ''   %}
                         <img src="{{ item.product.image }}" width="100px" />
                         {% else %}
                         <div
