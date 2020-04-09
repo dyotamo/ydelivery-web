@@ -22,8 +22,13 @@
                 {% for item in order.products %}
                 <tr>
                     <td>
-                        {% if item.product.image and product.image != ''   %}
+                        {% if product.image and product.image != ''   %}
                         <img src="{{ item.product.image }}" width="100px" />
+                        {% else %}
+                        <div
+                            style="background-color: orange; color: white; font-weight: bolder; width: 100px; height: 100px; text-align: center; border-radius: 100%; font-size: x-large;">
+                            {{ item.product.name[0] }}{{ item.product.name[1] }}{{ item.product.name[2] }}{{ item.product.name[3] }}
+                        </div>
                         {% endif %}
                     </td>
                     <td>{{ item.product.name }}</td>
