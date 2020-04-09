@@ -20,7 +20,11 @@
         <tbody>
             {% for item in order.products %}
             <tr>
-                <td><img src="{{ item.product.image }}" /></td>
+                <td>
+                    {% if item.product.image and product.image != ''   %}
+                    <img src="{{ item.product.image }}" />
+                    {% endif %}
+                </td>
                 <td>{{ item.product.name }}</td>
                 <td style="text-align: right;">{{ "{:,.2f} Mt".format(item.product.unit_price) }}</td>
                 <td style="text-align: right;">{{ item.quantity }}</td>

@@ -19,7 +19,8 @@ def import_csv(f):
         csv_reader = DictReader(f, delimiter=',')
 
         for row in csv_reader:
-            product = Product.query.filter_by(name=row['name']).first()
+            product = Product.query.filter_by(
+                name=row['name'], category=row['category']).first()
             if product is None:
                 db.session.add(Product(**row))
             else:

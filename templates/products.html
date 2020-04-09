@@ -29,7 +29,11 @@
         <tbody>
             {% for product in products %}
             <tr>
-                <td><img src="{{ product.image }}" /></td>
+                <td>
+                    {% if product.image and product.image != ''   %}
+                    <img src="{{ product.image }}" />
+                    {% endif %}
+                </td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.category }}</td>
                 <td style="text-align: right;">{{ "{:,.2f} Mt".format(product.unit_price) }}</td>

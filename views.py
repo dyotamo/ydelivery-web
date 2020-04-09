@@ -32,12 +32,11 @@ def index():
 
         path = save_csv(form)
         with open(path, "r") as f:
-
             try:
                 import_csv(f)
                 flash("Ficheiro carregado com sucesso.", "success")
                 return redirect(url_for("index"))
-            except TypeError:
+            except (TypeError, KeyError):
                 flash("Ficheiro inválido.", "warning")
 
     return render_template("products.html",

@@ -22,10 +22,10 @@ class Product_Order(db.Model):
 # Models
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
     category = db.Column(db.String(80), unique=False, nullable=False)
     unit_price = db.Column(db.Float, unique=False, nullable=False)
-    image = db.Column(db.String(255), unique=False, nullable=False)
+    image = db.Column(db.String(255), unique=False, nullable=True)
     orders = db.relationship('Product_Order', back_populates='product')
 
     def __repr__(self):
