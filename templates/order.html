@@ -4,40 +4,42 @@
 {% from "helpers/_form_helpers.html" import render_field %}
 
 <div>
-    <table class="table table-borderless">
-        <thead class="thead-dark">
-            <tr>
-                <th colspan="5" style="text-align: center;">{{ order.contact }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Produto</th>
-                <th scope="col" style="text-align: right;">Preço unitário</th>
-                <th scope="col" style="text-align: right;">Quantidades</th>
-                <th scope="col" style="text-align: right;">Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order.products %}
-            <tr>
-                <td>
-                    {% if item.product.image and product.image != ''   %}
-                    <img src="{{ item.product.image }}" width="100px" />
-                    {% endif %}
-                </td>
-                <td>{{ item.product.name }}</td>
-                <td style="text-align: right;">{{ "{:,.2f} MT".format(item.product.unit_price) }}</td>
-                <td style="text-align: right;">{{ item.quantity }}</td>
-                <td style="text-align: right;">{{ item.quantity * item.product.unit_price }}</td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <td colspan="5" style="text-align: right;">
-                    <h3>{{ "{:,.2f} Mt".format(total) }}</h3>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="5" style="text-align: center;">{{ order.contact }}</th>
+                </tr>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Produto</th>
+                    <th scope="col" style="text-align: right;">Preço unitário</th>
+                    <th scope="col" style="text-align: right;">Quantidades</th>
+                    <th scope="col" style="text-align: right;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.products %}
+                <tr>
+                    <td>
+                        {% if item.product.image and product.image != ''   %}
+                        <img src="{{ item.product.image }}" width="100px" />
+                        {% endif %}
+                    </td>
+                    <td>{{ item.product.name }}</td>
+                    <td style="text-align: right;">{{ "{:,.2f} MT".format(item.product.unit_price) }}</td>
+                    <td style="text-align: right;">{{ item.quantity }}</td>
+                    <td style="text-align: right;">{{ item.quantity * item.product.unit_price }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5" style="text-align: right;">
+                        <h3>{{ "{:,.2f} Mt".format(total) }}</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <hr />

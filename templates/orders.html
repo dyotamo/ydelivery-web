@@ -4,27 +4,29 @@
 <h1>Pedidos Feitos</h1>
 
 <div>
-    <table class="table table-borderless">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Referência</th>
-                <th scope="col">Contacto</th>
-                <th scope="col">Localização</th>
-                <th scope="col">Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in orders %}
-            <tr>
-                <td><a href="{{ url_for('order', ref=order.ref) }}">{{ order.ref }}</td>
-                <td>{{ order.contact }}</td>
-                <td><img alt='location'
-                        src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{{ order.longitude }},{{ order.latitude }},14.25,0,0/250x250?access_token=pk.eyJ1IjoiZHlvdGFtbyIsImEiOiJjanZkdGpvbnQwNmZtNGRwaHFjeTJzMTExIn0.UoLPLSMK5JK6ozw3Frh5mw'>
-                </td>
-                <td>{{ order.status }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Referência</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Localização</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><a href="{{ url_for('order', ref=order.ref) }}">{{ order.ref }}</td>
+                    <td>{{ order.contact }}</td>
+                    <td><img alt='location'
+                            src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{{ order.longitude }},{{ order.latitude }},14.25,0,0/250x250?access_token=pk.eyJ1IjoiZHlvdGFtbyIsImEiOiJjanZkdGpvbnQwNmZtNGRwaHFjeTJzMTExIn0.UoLPLSMK5JK6ozw3Frh5mw'>
+                    </td>
+                    <td>{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

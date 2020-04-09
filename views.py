@@ -1,31 +1,24 @@
 import json
 
-from flask import (
-    render_template,
-    jsonify,
-    flash,
-    redirect,
-    url_for,
-    abort,
-    request,
-)
-from flask_login import login_required, login_user, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import sqlalchemy
+from flask import (abort, flash, jsonify, redirect, render_template, request,
+                   url_for)
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import app, login_manager
-from models import db, Product, Order, Product_Order, User
-from forms.upload import UploadForm
 from forms.response import ResponseForm
+from forms.upload import UploadForm
 from forms.user import LoginForm, PasswordChangeForm
-from utils.produts import get_total
+from models import Order, Product, Product_Order, User, db
 from utils.collections import map_items, randomString
+from utils.produts import get_total
 from utils.telerivet import send_sms
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+@app.route('/products/<int:page>', methods=['GET', 'POST'])
 @login_required
-def index():
+def index(page=1):
     form = UploadForm()
     if form.validate_on_submit():
         from tools.file import save_csv, import_csv
@@ -40,8 +33,8 @@ def index():
                 flash("Ficheiro inválido.", "warning")
 
     return render_template("products.html",
-                           products=Product.query.order_by(
-                               sqlalchemy.text('name')),
+                           pagination=Product.query.paginate(page=page,
+                                                             per_page=7),
                            form=form)
 
 

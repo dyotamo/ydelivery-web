@@ -31,6 +31,4 @@ def import_csv(f):
                 product.unit_price = row['unit_price']
                 product.image = row['image']
                 db.session.merge(product)
-
-            print(product)
         db.session.commit()
