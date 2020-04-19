@@ -1,23 +1,8 @@
 import unittest
 
-from utils.collections import map_items
 from utils.produts import get_total
 
 from models import Product, Order, Product_Order
-
-
-class TestCollections(unittest.TestCase):
-    def test_map_items(self):
-        self.assertEqual(map_items([12, 12, 3, 4, 12, 89, 90]), {
-            12: 3,
-            3: 1,
-            4: 1,
-            89: 1,
-            90: 1
-        })
-
-    def test_map_items_empty(self):
-        self.assertEqual(map_items([]), {})
 
 
 class TestProducts(unittest.TestCase):

@@ -100,7 +100,7 @@ def request_():
                   longitude=body['location']['longitude'])
 
     with db.session.no_autoflush:
-        for product_id, quantity in map_items(body['cart']).items():
+        for product_id, quantity in body['cart'].items():
             item = Product_Order(product_id=product_id,
                                  order_ref=order.ref,
                                  quantity=quantity)
