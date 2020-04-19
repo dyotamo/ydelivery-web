@@ -10,7 +10,7 @@ from forms.response import ResponseForm
 from forms.upload import UploadForm
 from forms.user import LoginForm, PasswordChangeForm
 from models import Order, Product, Product_Order, User, db
-from utils.collections import map_items, randomString
+from utils.collections import randomString
 from utils.produts import get_total
 from utils.telerivet import send_sms
 
