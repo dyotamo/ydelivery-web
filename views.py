@@ -16,7 +16,7 @@ from utils.produts import get_total
 # from utils.telerivet import send_sms
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/products/<int:page>', methods=['GET', 'POST'])
 @login_required
 def index(page=1):
