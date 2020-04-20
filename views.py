@@ -181,19 +181,20 @@ def load_user(user_id):
 # HTTP Errors views
 @app.errorhandler(500)
 def internal_server_error(e):
-    return jsonify("500 Internal Server Error, dyotamo has been reported.")
+    return jsonify(
+        "500 Internal Server Error, dyotamo has been reported."), 500
 
 
 @app.errorhandler(403)
 def forbidden(e):
-    return jsonify("403 Forbidden.")
+    return jsonify("403 Forbidden."), 403
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return jsonify("404 Not Found.")
+    return jsonify("404 Not Found."), 404
 
 
 @app.errorhandler(405)
 def method_not_allowed(e):
-    return jsonify("405 Method Not Allowed.")
+    return jsonify("405 Method Not Allowed."), 405
