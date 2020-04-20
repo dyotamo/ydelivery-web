@@ -1,3 +1,4 @@
+import os
 import json
 
 from flask import (abort, flash, jsonify, redirect, render_template, request,
@@ -91,7 +92,7 @@ def order(ref):
 
 
 @app.route('/request', methods=['POST'])
-def request_():
+def _request():
     body = json.loads(str(request.json).replace("'", '"'))
 
     order = Order(ref=str(randomString(10)),
@@ -108,6 +109,9 @@ def request_():
 
     db.session.add(order)
     db.session.commit()
+
+    send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
+             'Referência: {}.'.format(order.ref))
 
     return jsonify(dict(reference=order.ref))
 
