@@ -1,4 +1,4 @@
-import os
+# import os
 import json
 
 from flask import (abort, flash, jsonify, redirect, render_template, request,
@@ -13,7 +13,7 @@ from forms.user import LoginForm, PasswordChangeForm
 from models import Order, Product, Product_Order, User, db
 from utils.collections import randomString
 from utils.produts import get_total
-from utils.telerivet import send_sms
+# from utils.telerivet import send_sms
 
 
 @app.route('/', methods=['GET'])
@@ -66,21 +66,21 @@ def order(ref):
 
                 db.session.add(product)
             flash("Pedido aceite.", "success")
-            send_sms(
-                order.contact,
-                'O seu pedido foi aceite, valor de {:,.2f} Mt. Em breve '
-                'faremos a entrega dos seus produtos na localização '
-                'informada.\n\n'
-                'Referência: {}.\n\n'
-                'NB: O pagamento é feito no momento da entrega.'.format(
-                    get_total(order), order.ref))
+            # send_sms(
+            #     order.contact,
+            #     'O seu pedido foi aceite, valor de {:,.2f} Mt. Em breve '
+            #     'faremos a entrega dos seus produtos na localização '
+            #     'informada.\n\n'
+            #     'Referência: {}.\n\n'
+            #     'NB: O pagamento é feito no momento da entrega.'.format(
+            #         get_total(order), order.ref))
         else:
             flash("Pedido rejeitado.", "danger")
-            send_sms(
-                order.contact,
-                'Infelizmente por razões alheias na nossa vontade '
-                'não podemos satisfazer o seu pedido.\n\n'
-                'Referência: {}.'.format(order.ref))
+            # send_sms(
+            #     order.contact,
+            #     'Infelizmente por razões alheias na nossa vontade '
+            #     'não podemos satisfazer o seu pedido.\n\n'
+            #     'Referência: {}.'.format(order.ref))
 
         db.session.commit()
         return redirect(url_for("orders"))
@@ -110,8 +110,8 @@ def _request():
     db.session.add(order)
     db.session.commit()
 
-    send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
-             'Referência: {}.'.format(order.ref))
+    # send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
+    #          'Referência: {}.'.format(order.ref))
 
     return jsonify(dict(reference=order.ref))
 
