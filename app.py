@@ -21,7 +21,9 @@ login_manager.login_message_category = "warning"
 # Create the Flask-Restless API manager.
 manager = APIManager(app, flask_sqlalchemy_db=db)
 manager.create_api(Product, exclude_columns=['orders'], results_per_page=0)
-manager.create_api(Order, results_per_page=0)
+manager.create_api(Order,
+                   exclude_columns=['order_ref', 'product_id'],
+                   results_per_page=0)
 
 from views import *
 
