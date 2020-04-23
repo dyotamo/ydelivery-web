@@ -7,6 +7,7 @@ verify_ssl = true
 flake8 = "*"
 yapf = "*"
 rope = "*"
+pip = "*"
 
 [packages]
 flask = "*"
@@ -23,4 +24,4 @@ beautifulsoup4 = "*"
 psycopg2-binary = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
