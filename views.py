@@ -1,4 +1,4 @@
-# import os
+import os
 import json
 
 from flask import (abort, flash, jsonify, redirect, render_template, request,
@@ -30,7 +30,7 @@ def index(page=1):
                 import_csv(f)
                 flash("Ficheiro carregado com sucesso.", "success")
                 return redirect(url_for("index"))
-            except (TypeError, KeyError):
+            except (TypeError, KeyError, UnicodeDecodeError):
                 flash("Ficheiro inválido.", "warning")
 
     return render_template("products.html",
@@ -110,8 +110,8 @@ def _request():
     db.session.add(order)
     db.session.commit()
 
-    # send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
-    #          'Referência: {}.'.format(order.ref))
+    send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
+             'Referência: {}.'.format(order.ref))
 
     return jsonify(dict(reference=order.ref))
 

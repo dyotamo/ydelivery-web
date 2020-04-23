@@ -4,7 +4,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_restless import APIManager
 
-from models import db, Product
+from models import db, Product, Order
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get(
@@ -21,6 +21,7 @@ login_manager.login_message_category = "warning"
 # Create the Flask-Restless API manager.
 manager = APIManager(app, flask_sqlalchemy_db=db)
 manager.create_api(Product, exclude_columns=['orders'], results_per_page=0)
+manager.create_api(Order, results_per_page=0)
 
 from views import *
 
