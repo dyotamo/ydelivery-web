@@ -33,11 +33,6 @@
                     <td>
                         {% if product.image and product.image != ''   %}
                         <img src="{{ product.image }}" width="100px" />
-                        {% else %}
-                        <div
-                            style="background-color: orange; color: white; font-weight: bolder; width: 100px; height: 100px; text-align: center; border-radius: 100%; font-size: x-large;">
-                            {{ product.name[0] }}{{ product.name[1] }}{{ product.name[2] }}{{ product.name[3] }}
-                        </div>
                         {% endif %}
                     </td>
                     <td>{{ product.name }}</td>
