@@ -110,8 +110,8 @@ def _request():
     db.session.add(order)
     db.session.commit()
 
-    send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
-             'Referência: {}.'.format(order.ref))
+    # send_sms(os.environ['TELEPHONE_NUMBER'], 'Novo pedido feito.\n\n'
+    #          'Referência: {}.'.format(order.ref))
 
     return jsonify(dict(reference=order.ref))
 
