@@ -1,7 +1,6 @@
 import unittest
 
 from utils.produts import get_total
-
 from models import Product, Order, Product_Order
 
 
