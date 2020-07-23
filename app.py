@@ -59,7 +59,8 @@ def upload_brews():
             try:
                 import_csv(f)
                 flash('Ficheiro carregado com sucesso.', 'success')
-            except (TypeError, KeyError, UnicodeDecodeError):
+            except (TypeError, KeyError, UnicodeDecodeError) as e:
+                print(e)
                 flash('Ficheiro inválido.', 'warning')
     return redirect(url_for('index'))
 
