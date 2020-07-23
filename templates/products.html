@@ -2,7 +2,7 @@
 
 {% block container %}
 {% from "helpers/_form_helpers.html" import render_field %}
-<form method="POST" action="{{ url_for('index') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ url_for('upload_brews') }}" enctype="multipart/form-data">
     {{ form.csrf_token }}
     <div class="form-group">
         {{ render_field(form.csv, class="form-control-file") }}
@@ -19,12 +19,12 @@
 <div>
     <div class="table-responsive">
         <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col"></th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Categoria</th>
                     <th scope="col" style="text-align: right;">Preço unitário</th>
+                    <th scope="col">Disponível?</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,8 +36,14 @@
                         {% endif %}
                     </td>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.category }}</td>
                     <td style="text-align: right;">{{ "{:,.2f} MT".format(product.unit_price) }}</td>
+                    <td>
+                        {% if product.available %}
+                        <i class="far fa-check-circle"></i>
+                        {% else %}
+                        <i class="fas fa-times"></i>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

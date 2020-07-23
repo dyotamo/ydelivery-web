@@ -4,32 +4,29 @@ from flask_login import UserMixin
 db = SQLAlchemy()
 
 
-class Product_Order(db.Model):
-    product_id = db.Column(db.Integer,
-                           db.ForeignKey('product.id'),
-                           primary_key=True)
+class Brew_Order(db.Model):
+    brew_id = db.Column(db.Integer, db.ForeignKey('brew.id'), primary_key=True)
     order_ref = db.Column(db.String,
                           db.ForeignKey('order.ref'),
                           primary_key=True)
-    product = db.relationship('Product', back_populates='orders')
-    order = db.relationship('Order', back_populates='products')
+    brew = db.relationship('Brew', back_populates='orders')
+    order = db.relationship('Order', back_populates='brews')
     quantity = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
-        return '<Item %s, %d>' % (self.product, self.quantity)
+        return '<Item %s, %d>' % (self.brew, self.quantity)
 
 
-# Models
-class Product(db.Model):
+class Brew(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    category = db.Column(db.String(80), unique=False, nullable=False)
     unit_price = db.Column(db.Float, unique=False, nullable=False)
-    image = db.Column(db.String(255), unique=False, nullable=True)
-    orders = db.relationship('Product_Order', back_populates='product')
+    available = db.Column(db.Boolean, nullable=False, default=True)
+    image = db.Column(db.String(255), unique=True, nullable=True)
+    orders = db.relationship('Brew_Order', back_populates='brew')
 
     def __repr__(self):
-        return '<Product %s>' % self.name
+        return '<Brew %s>' % self.name
 
 
 class Order(db.Model):
@@ -41,7 +38,7 @@ class Order(db.Model):
                        unique=False,
                        nullable=False,
                        default='Pendente')
-    products = db.relationship('Product_Order', back_populates='order')
+    brews = db.relationship('Brew_Order', back_populates='order')
 
     def __repr__(self):
         return '<Order %s>' % self.ref

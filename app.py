@@ -8,7 +8,7 @@ from flask_login import (LoginManager, current_user, login_required,
 from flask_restless import APIManager
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import db, User, Product, Order, Product_Order
+from models import db, User, Brew, Order, Brew_Order
 from forms.response import ResponseForm
 from forms.upload import UploadForm
 from forms.user import LoginForm, PasswordChangeForm
@@ -33,16 +33,25 @@ login_manager.login_message_category = 'warning'
 
 # Flask-Restless
 manager = APIManager(app, flask_sqlalchemy_db=db)
-manager.create_api(Product, exclude_columns=['orders'], results_per_page=0)
+manager.create_api(Brew, exclude_columns=['orders'], results_per_page=0)
 manager.create_api(Order,
-                   exclude_columns=['order_ref', 'product_id'],
+                   exclude_columns=['order_ref', 'brew_id'],
                    results_per_page=0)
 
 
 @app.route('/', methods=['get', 'post'])
-@app.route('/products/<int:page>', methods=['get', 'post'])
+@app.route('/brews/<int:page>', methods=['get', 'post'])
 @login_required
 def index(page=1):
+    return render_template('products.html',
+                           pagination=Brew.query.paginate(page=page,
+                                                          per_page=7),
+                           form=UploadForm())
+
+
+@app.route('/upload', methods=['post'])
+@login_required
+def upload_brews():
     form = UploadForm()
     if form.validate_on_submit():
         path = save_csv(form)
@@ -50,13 +59,9 @@ def index(page=1):
             try:
                 import_csv(f)
                 flash('Ficheiro carregado com sucesso.', 'success')
-                return redirect(url_for('index'))
             except (TypeError, KeyError, UnicodeDecodeError):
                 flash('Ficheiro inválido.', 'warning')
-    return render_template('products.html',
-                           pagination=Product.query.paginate(page=page,
-                                                             per_page=7),
-                           form=form)
+    return redirect(url_for('index'))
 
 
 @app.route('/orders', methods=['get'])
@@ -82,10 +87,10 @@ def order(ref):
 
         if (status == 'Aceite'):
             # Fazer a diminuição da quantidade dos produtos em stock
-            for item in order.products:
-                product = Product.query.get(item.product.id)
+            for item in order.brews:
+                brew = Brew.query.get(item.brew.id)
 
-                db.session.add(product)
+                db.session.add(brew)
             flash('Pedido aceite.', 'success')
         else:
             flash('Pedido rejeitado.', 'danger')
@@ -101,18 +106,18 @@ def order(ref):
 
 @app.route('/request', methods=['post'])
 def _request():
-    body = loads(str(request.json).replace(''', '''))
+    body = loads(str(request.json).replace("'", '"'))
     order = Order(ref=str(randomString(10)),
                   contact=body['contact'],
                   latitude=body['location']['latitude'],
                   longitude=body['location']['longitude'])
 
     with db.session.no_autoflush:
-        for product_id, quantity in body['cart'].items():
-            item = Product_Order(product_id=product_id,
-                                 order_ref=order.ref,
-                                 quantity=quantity)
-            order.products.append(item)
+        for brew_id, quantity in body['cart'].items():
+            item = Brew_Order(brew_id=brew_id,
+                              order_ref=order.ref,
+                              quantity=quantity)
+            order.brews.append(item)
     db.session.add(order)
     db.session.commit()
     return jsonify(dict(reference=order.ref))
@@ -160,7 +165,7 @@ def password():
             else:
                 error = 'Confirmação de password falhou.'
         else:
-            error = 'Password corrente errado.'
+            error = 'Password corrente errada.'
     return render_template('accounts/password.html', form=form, error=error)
 
 

@@ -1,60 +1,50 @@
-from random import randint
-
 from bs4 import BeautifulSoup
 from werkzeug.security import generate_password_hash
 
 from app import app, db
-from models import Product, User
+from models import Brew, User
 
 
-class CategoryModel:
-    def __init__(self, name):
+class BrewModel:
+    def __init__(self, name, unit_price):
         self.name = name
-        self.products = []
-
-    def __repr__(self):
-        return self.name + str(self.products)
-
-
-class ProductModel:
-    def __init__(self, name):
-        self.name = name
-        self.unit_price = randint(1, 10000)
+        self.unit_price = unit_price
 
     def __repr__(self):
         return self.name
 
 
 def parse():
-    categories = []
-
-    soup_obj = BeautifulSoup(open('fixture/foods.html'), "html.parser")
-
-    for cat in soup_obj.find_all('ul'):
-        category = CategoryModel(name=cat['class'][0].capitalize())
-        for prod in cat.find_all('li'):
-            product = ProductModel(name=prod.text.strip())
-            category.products.append(product)
-        categories.append(category)
-    return categories
+    brews = []
+    with open('fixture/brew.html') as fixture:
+        soup_obj = BeautifulSoup(fixture, 'html.parser')
+        for brew in soup_obj.find_all('brew'):
+            brews.append(
+                BrewModel(
+                    name=brew.text.strip(),
+                    unit_price=float(brew['unit_price']),
+                ))
+        return brews
 
 
 def _generate_user():
     db.session.add(
-        User(username='admin', password=generate_password_hash('admin')))
+        User(
+            username='admin',
+            password=generate_password_hash('admin'),
+        ))
 
 
-def _generate_products(categories):
-    for cat in categories:
-        for prod in cat.products:
-            product = Product(name=prod.name,
-                              category=cat.name,
-                              unit_price=prod.unit_price)
-            db.session.add(product)
+def _generate_brews(brews):
+    for prod in brews:
+        db.session.add(Brew(
+            name=prod.name,
+            unit_price=prod.unit_price,
+        ))
 
 
 if __name__ == '__main__':
     with app.app_context():
         _generate_user()
-        _generate_products(parse())
+        _generate_brews(parse())
         db.session.commit()

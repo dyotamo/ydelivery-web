@@ -4,7 +4,7 @@ from tempfile import gettempdir
 
 from werkzeug.utils import secure_filename
 
-from models import db, Product
+from models import db, Brew
 
 
 def save_csv(form):
@@ -21,13 +21,11 @@ def import_csv(f):
         csv_reader = DictReader(f, delimiter=',')
 
         for row in csv_reader:
-            product = Product.query.filter_by(
-                name=row['name'], category=row['category']).first()
+            product = Brew.query.filter_by(name=row['name']).first()
             if product is None:
-                db.session.add(Product(**row))
+                db.session.add(Brew(**row))
             else:
                 product.name = row['name']
-                product.category = row['category']
                 product.unit_price = row['unit_price']
                 product.image = row['image']
                 db.session.merge(product)

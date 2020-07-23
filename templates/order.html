@@ -3,33 +3,31 @@
 {% block container %}
 {% from "helpers/_form_helpers.html" import render_field %}
 
+<h1>Pedido de {{ order.contact }}</h1>
 <div>
     <div class="table-responsive">
         <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th colspan="5" style="text-align: center;">{{ order.contact }}</th>
-                </tr>
+            <thead class="thead-light">
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">Produto</th>
+                    <th scope="col">Cerveja</th>
                     <th scope="col" style="text-align: right;">Preço unitário</th>
                     <th scope="col" style="text-align: right;">Quantidades</th>
                     <th scope="col" style="text-align: right;">Subtotal</th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in order.products %}
+                {% for item in order.brews %}
                 <tr>
                     <td>
-                        {% if item.product.image and item.product.image != ''   %}
-                        <img src="{{ item.product.image }}" width="100px" />
+                        {% if item.brew.image and item.brew.image != ''   %}
+                        <img src="{{ item.brew.image }}" width="100px" />
                         {% endif %}
                     </td>
-                    <td>{{ item.product.name }}</td>
-                    <td style="text-align: right;">{{ "{:,.2f} MT".format(item.product.unit_price) }}</td>
+                    <td>{{ item.brew.name }}</td>
+                    <td style="text-align: right;">{{ "{:,.2f} MT".format(item.brew.unit_price) }}</td>
                     <td style="text-align: right;">{{ item.quantity }}</td>
-                    <td style="text-align: right;">{{ item.quantity * item.product.unit_price }}</td>
+                    <td style="text-align: right;">{{ item.quantity * item.brew.unit_price }}</td>
                 </tr>
                 {% endfor %}
                 <tr>
