@@ -14,4 +14,5 @@ def _generate_user():
 
 if __name__ == '__main__':
     with app.app_context():
+        _generate_user()
         db.session.commit()
