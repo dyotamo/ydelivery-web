@@ -207,5 +207,11 @@ def method_not_allowed(e):
     return jsonify('405 Method Not Allowed.'), 405
 
 
+@app.after_request
+def add_cors(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
