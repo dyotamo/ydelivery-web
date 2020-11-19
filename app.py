@@ -33,7 +33,9 @@ login_manager.login_message_category = 'warning'
 
 # Flask-Restless
 manager = APIManager(app, flask_sqlalchemy_db=db)
-manager.create_api(Brew, exclude_columns=['orders'], results_per_page=0)
+manager.create_api(Brew,
+                   exclude_columns=['orders', 'image'],
+                   results_per_page=0)
 manager.create_api(Order,
                    exclude_columns=['order_ref', 'brew_id'],
                    results_per_page=0)
