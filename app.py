@@ -45,10 +45,14 @@ manager.create_api(Order,
 @app.route('/brews/<int:page>', methods=['get', 'post'])
 @login_required
 def index(page=1):
-    return render_template('products.html',
-                           pagination=Brew.query.paginate(page=page,
-                                                          per_page=7),
-                           form=UploadForm())
+    return render_template(
+        'products.html',
+        form=UploadForm(),
+        pagination=Brew.query.paginate(
+            page=page,
+            per_page=7,
+        ),
+    )
 
 
 @app.route('/upload', methods=['post'])
@@ -61,8 +65,7 @@ def upload_brews():
             try:
                 import_csv(f)
                 flash('Ficheiro carregado com sucesso.', 'success')
-            except (TypeError, KeyError, UnicodeDecodeError) as e:
-                print(e)
+            except (TypeError, KeyError, UnicodeDecodeError):
                 flash('Ficheiro inválido.', 'warning')
     return redirect(url_for('index'))
 
