@@ -32,7 +32,7 @@ class Brew(db.Model):
 class Order(db.Model):
     ref = db.Column(db.String(10), primary_key=True)
     contact = db.Column(db.String(25), unique=False, nullable=False)
-    address = db.Column(db.String(255), primary_key=True)
+    address = db.Column(db.String(255), unique=False, nullable=False)
     status = db.Column(db.String(10),
                        unique=False,
                        nullable=False,
