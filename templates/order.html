@@ -17,9 +17,9 @@
                 {% for item in order.brews %}
                 <tr>
                     <td>{{ item.brew.name }}</td>
-                    <td style="text-align: right;">{{ "{:,.2f} MT".format(item.brew.unit_price) }}</td>
+                    <td style="text-align: right;">{{ "{:,.2f} MT".format(0.0) }}</td>
                     <td style="text-align: right;">{{ item.quantity }}</td>
-                    <td style="text-align: right;">{{ item.quantity * item.brew.unit_price }}</td>
+                    <td style="text-align: right;">{{ item.quantity * 1.0 }}</td>
                 </tr>
                 {% endfor %}
                 <tr>

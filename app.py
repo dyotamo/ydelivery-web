@@ -13,7 +13,7 @@ from forms.response import ResponseForm
 from forms.upload import UploadForm
 from forms.user import LoginForm, PasswordChangeForm
 from utils.collections import randomString
-from utils.produts import get_total
+from utils.products import get_total
 from tools.file import save_csv, import_csv
 
 app = Flask(__name__)
@@ -33,9 +33,7 @@ login_manager.login_message_category = 'warning'
 
 # Flask-Restless
 manager = APIManager(app, flask_sqlalchemy_db=db)
-manager.create_api(Brew,
-                   exclude_columns=['orders'],
-                   results_per_page=0)
+manager.create_api(Brew, exclude_columns=['orders'], results_per_page=0)
 manager.create_api(Order,
                    exclude_columns=['order_ref', 'brew_id'],
                    results_per_page=0)
