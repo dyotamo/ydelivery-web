@@ -1,7 +1,7 @@
 import unittest
 
 from utils.produts import get_total
-from models import Brew, Order, Brew_Order
+from models import Brew, Order, BrewOrder
 
 
 class TestBrews(unittest.TestCase):
@@ -12,9 +12,9 @@ class TestBrews(unittest.TestCase):
         brew_2 = Brew(id=2, unit_price=300.0)
         brew_3 = Brew(id=3, unit_price=250.0)
 
-        item_1 = Brew_Order(brew=brew_1, quantity=5)
-        item_2 = Brew_Order(brew=brew_2, quantity=1)
-        item_3 = Brew_Order(brew=brew_3, quantity=4)
+        item_1 = BrewOrder(brew=brew_1, quantity=5)
+        item_2 = BrewOrder(brew=brew_2, quantity=1)
+        item_3 = BrewOrder(brew=brew_3, quantity=4)
 
         order.brews.append(item_1)
         order.brews.append(item_2)

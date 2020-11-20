@@ -1,8 +1,5 @@
 {
-    "location": {
-        "latitude": 37.4219983,
-        "longitude": -122.084
-    },
+    "address": "Nr 20 Av. Guerra Popular, Maputo",
     "contact": "+258860299600",
     "cart": {
         "1": 2,

@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-
-{% block container %}
-{% from "helpers/_form_helpers.html" import render_field %}
+{% extends 'base.html' %} {% block container %} {% from "helpers/_form_helpers.html" import render_field %}
 
 <h1>Pedido de {{ order.contact }}</h1>
 <div>
@@ -19,11 +16,6 @@
             <tbody>
                 {% for item in order.brews %}
                 <tr>
-                    <td>
-                        {% if item.brew.image and item.brew.image != ''   %}
-                        <img src="{{ item.brew.image }}" width="100px" />
-                        {% endif %}
-                    </td>
                     <td>{{ item.brew.name }}</td>
                     <td style="text-align: right;">{{ "{:,.2f} MT".format(item.brew.unit_price) }}</td>
                     <td style="text-align: right;">{{ item.quantity }}</td>
@@ -43,13 +35,6 @@
 <hr />
 
 <div class="row">
-    <div class="col">
-        <h2>Localização</h2>
-        <img alt='location'
-            src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{{ order.longitude }},{{ order.latitude }},14.25,0,0/400x400?access_token=pk.eyJ1IjoiZHlvdGFtbyIsImEiOiJjanZkdGpvbnQwNmZtNGRwaHFjeTJzMTExIn0.UoLPLSMK5JK6ozw3Frh5mw'>
-
-    </div>
-
     <div class="col">
         <form method="POST" action="{{ url_for('order', ref=order.ref) }}">
             {{ form.csrf_token }}

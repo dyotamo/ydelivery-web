@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block container %}
+{% extends 'base.html' %} {% block container %}
 <h1>Pedidos</h1>
 
 <div>
@@ -11,7 +9,7 @@
                     <th scope="col">Referência</th>
                     <th scope="col">Contacto</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Localização</th>
+                    <th scope="col">Endereço</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,9 +18,7 @@
                     <td><a href="{{ url_for('order', ref=order.ref) }}">{{ order.ref }}</td>
                     <td>{{ order.contact }}</td>
                     <td>{{ order.status }}</td>
-                    <td><img alt="location" class="rounded"
-                            src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{{ order.longitude }},{{ order.latitude }},14.25,0,0/250x250?access_token=pk.eyJ1IjoiZHlvdGFtbyIsImEiOiJjanZkdGpvbnQwNmZtNGRwaHFjeTJzMTExIn0.UoLPLSMK5JK6ozw3Frh5mw">
-                    </td>
+                    <td>{{ order.address }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

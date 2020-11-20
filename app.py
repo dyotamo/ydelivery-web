@@ -8,7 +8,7 @@ from flask_login import (LoginManager, current_user, login_required,
 from flask_restless import APIManager
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import db, User, Brew, Order, Brew_Order
+from models import db, User, Brew, Order, BrewOrder
 from forms.response import ResponseForm
 from forms.upload import UploadForm
 from forms.user import LoginForm, PasswordChangeForm
@@ -17,7 +17,7 @@ from utils.produts import get_total
 from tools.file import save_csv, import_csv
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = environ.get('SECRET_KEY') or 'temp'
+app.config['SECRET_KEY'] = environ.get('SECRET_KEY') or 'top-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get(
     'DATABASE_URL') or 'sqlite:///shop.db'
 
@@ -34,7 +34,7 @@ login_manager.login_message_category = 'warning'
 # Flask-Restless
 manager = APIManager(app, flask_sqlalchemy_db=db)
 manager.create_api(Brew,
-                   exclude_columns=['orders', 'image'],
+                   exclude_columns=['orders'],
                    results_per_page=0)
 manager.create_api(Order,
                    exclude_columns=['order_ref', 'brew_id'],
@@ -115,14 +115,13 @@ def _request():
     body = loads(str(request.json).replace("'", '"'))
     order = Order(ref=str(randomString(10)),
                   contact=body['contact'],
-                  latitude=body['location']['latitude'],
-                  longitude=body['location']['longitude'])
+                  address=body['address'])
 
     with db.session.no_autoflush:
         for brew_id, quantity in body['cart'].items():
-            item = Brew_Order(brew_id=brew_id,
-                              order_ref=order.ref,
-                              quantity=quantity)
+            item = BrewOrder(brew_id=brew_id,
+                             order_ref=order.ref,
+                             quantity=quantity)
             order.brews.append(item)
     db.session.add(order)
     db.session.commit()

@@ -7,8 +7,8 @@ from models import User
 def _generate_user():
     db.session.add(
         User(
-            username='admin',
-            password=generate_password_hash('admin'),
+            username='dyotamo',
+            password=generate_password_hash('passwd'),
         ))
 
 
